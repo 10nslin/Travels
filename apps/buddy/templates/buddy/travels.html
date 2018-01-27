@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Traveling Buddies</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+   
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+    <a href="/logout" class="text-right">Logout</a>
+    <h1 id="main-header">Hello, {{ current_user.first_name }}!</h1>
+    <div class="thead-dark">
+        <h4>Your Trip Schedules</h4>
+        <table class="table">
+            <tr>
+                <th>Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+            </tr>
+            <tbody>
+                {% for key in my_trips %}
+
+                <tr>
+                    <td><a href="/destination/{{key.id}}">{{ key.destination }}</a></td>
+                    <td>{{ key.start_trip }}</td>
+                    <td>{{ key.end_trip }}</td>
+                    <td>{{ key.plan }}</td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="thead-dark">
+        <h4>Other Users Travel Plans</h4>
+        <table class="table">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Destination</th>
+                <th>Travel Start Date</th>
+                <th>Travel End Date</th>
+                <th>Plan</th>
+                <th>Do you want to join?</th>
+            </tr>
+            <tbody>
+                {% for key in travels %}
+                <tr>
+                    <td>{{ key.user.first_name }} {{key.user.last_name }}</td>
+                    <td><a href="/destination/{{key.id}}">{{ key.destination }}</a></td>
+                    <td>{{ key.start_trip }}</td>
+                    <td>{{ key.end_trip }}</td>
+                    <td>{{ key.plan }}</td>
+                    <td>
+                        <form action="/travelers/{{key.id}}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="join">
+
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="/add_plan" class="nav-links">Add Travel Plan</a>
+</div>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
